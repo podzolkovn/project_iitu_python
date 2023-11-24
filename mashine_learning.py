@@ -59,4 +59,4 @@ print(alm)
 print(ast)
 print(akt)
 print(shm)
-print('tesst')
+
