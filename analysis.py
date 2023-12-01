@@ -1,5 +1,5 @@
 import pandas
-from write_to_csv import check_file_buy_aktau, check_file_buy_shymkent, check_file_buy_astana, check_file_buy_almaty
+from write_to_csv import check_file_buy_shymkent, check_file_buy_astana, check_file_buy_almaty
 from math import ceil
 
 
@@ -33,44 +33,8 @@ PRICE_PER_YEAR = {
         2020: {'price_per_area_metr': 483000},
         2021: {'price_per_area_metr': 509000},
         2022: {'price_per_area_metr': 547000}
-    },
-    'Актау': {
-        2015: {'price_per_area_metr': 348000},
-        2016: {'price_per_area_metr': 382000},
-        2017: {'price_per_area_metr': 405000},
-        2018: {'price_per_area_metr': 423000},
-        2019: {'price_per_area_metr': 447000},
-        2020: {'price_per_area_metr': 468000},
-        2021: {'price_per_area_metr': 494000},
-        2022: {'price_per_area_metr': 532000}
     }
 }
-
-
-def prediction_aktau():
-    check_file_buy_aktau()
-    read_file = pandas.read_csv('date/buy_build_aktau.csv')
-    avg_price_per_area_metr = ceil(read_file['price_per_area_metr'].mean())
-
-    add_new = {2023: {
-        'price_per_area_metr': avg_price_per_area_metr
-    }}
-
-    PRICE_PER_YEAR.get('Актау').update(add_new)
-
-    mid_list = []
-    for key, value in PRICE_PER_YEAR.get('Актау').items():
-        for val in value.values():
-            middle = {
-                'date': key,
-                'price': val
-            }
-            mid_list.append(middle)
-    data_frame = pandas.DataFrame({
-        'date': [year.get('date') for year in mid_list],
-        'price': [price.get('price') for price in mid_list]
-    })
-    data_frame.to_csv('date/prediction_aktau.csv')
 
 
 def prediction_almaty():

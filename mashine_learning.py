@@ -8,7 +8,6 @@ def predictions_line_regression():
     date = [[2024], [2025], [2026], [2027], [2028], [2029], [2030]]
 
     almaty = pandas.read_csv('date/prediction_almaty.csv')
-    aktau = pandas.read_csv('date/prediction_aktau.csv')
     astana = pandas.read_csv('date/prediction_astana.csv')
     shymkent = pandas.read_csv('date/prediction_shymkent.csv')
 
@@ -16,11 +15,6 @@ def predictions_line_regression():
     date_almaty = np.array(almaty.date).reshape(-1, 1)
     reg_almaty = linear_model.LinearRegression()
     reg_almaty.fit(date_almaty, price_almaty)
-
-    price_aktau = np.array(aktau.price).reshape(-1, 1)
-    date_aktau = np.array(aktau.date).reshape(-1, 1)
-    reg_aktau = linear_model.LinearRegression()
-    reg_aktau.fit(date_aktau, price_aktau)
 
     price_astana = np.array(astana.price).reshape(-1, 1)
     date_astana = np.array(astana.date).reshape(-1, 1)
@@ -34,12 +28,10 @@ def predictions_line_regression():
 
     alm_pred = reg_almaty.predict(date)
     ast_pred = reg_astana.predict(date)
-    akt_pred = reg_aktau.predict(date)
     shm_pred = reg_shymkent.predict(date)
 
     alm = []
     ast = []
-    akt = []
     shm = []
 
     for i in range(len(alm_pred)):
@@ -49,10 +41,6 @@ def predictions_line_regression():
     for i in range(len(ast_pred)):
         for j in range(len(ast_pred[i])):
             ast.append(ceil(ast_pred[i][j]))
-
-    for i in range(len(akt_pred)):
-        for j in range(len(akt_pred[i])):
-            akt.append(ceil(akt_pred[i][j]))
 
     for i in range(len(shm_pred)):
         for j in range(len(shm_pred[i])):
@@ -70,11 +58,6 @@ def predictions_line_regression():
         mid = f'{" ":<7}{date_res[j]} : {ast[j]} тг/м² \n'
         ast_res += mid
 
-    akt_res = 'Aktau: \n'
-    for j in range(len(akt)):
-        mid = f'{" ":<7}{date_res[j]} : {akt[j]} тг/м² \n'
-        akt_res += mid
-
     shm_res = 'Shymkent: \n'
     for j in range(len(shm)):
         mid = f'{" ":<7}{date_res[j]} : {shm[j]} тг/м² \n'
@@ -82,5 +65,4 @@ def predictions_line_regression():
 
     return (f'{alm_res}'
             f'{ast_res}'
-            f'{akt_res}'
             f'{shm_res}')
